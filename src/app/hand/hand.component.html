@@ -1,0 +1,6 @@
+
+<div class="cards">
+  <div *ngFor="let card of cards; index as i;" class="card" (click)="playCard(card)">
+      <img  [class.darker]="!myTurnToPlay || !isCardPlayable(card)" src="{{card.imgSrc}}" alt="">
+  </div>  
+</div>

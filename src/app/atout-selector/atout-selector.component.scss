@@ -1,0 +1,25 @@
+.atoutSelector{
+    display: flex;
+    position: absolute;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+    height: 10em;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);    
+    background-color: gray;
+
+    img{
+        display: inline-block;
+        height: 8em;
+        width: 24%;
+    }
+
+    img:hover{
+        transform: scale(1.1);
+        cursor: pointer;
+        transition: transform .2s ease-in-out;
+        z-index: 2;
+    }
+}

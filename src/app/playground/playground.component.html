@@ -1,0 +1,6 @@
+
+<div *ngIf="plie" class="plie">
+  <div *ngFor="let card of plie.getCards()" class="card" >
+    <img src="{{card.imgSrc}}" alt="">
+  </div>
+</div>

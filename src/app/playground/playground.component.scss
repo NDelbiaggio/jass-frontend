@@ -1,0 +1,25 @@
+
+.plie{
+    display: flex;
+    justify-content: center;
+    
+
+    .card{
+        box-sizing: border-box;
+        width: auto;
+        padding: 0.5em;
+
+        img{
+            display: block;
+            margin: auto;
+            width: 100%;
+            max-width: 130px;
+            height: 100%;
+            box-shadow: 3px 2px 0 black;
+            border-radius: 10px;    
+            z-index: 1;
+        }
+        
+    }
+
+}

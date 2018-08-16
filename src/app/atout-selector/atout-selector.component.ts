@@ -11,30 +11,50 @@ export class AtoutSelectorComponent implements OnInit {
   @Input('selfPlayer') selfPlayer: string;
 
   chooseAtout: boolean = false;
+  hadChibre: boolean = false;
+  atoutMessage: string = 'Yourt turn to choose atout';
 
-  constructor(private atoutService: AtoutService) { 
+  constructor(private atoutService: AtoutService) {
 
   }
 
   ngOnInit() {
     this.subscribeToChooseAtout();
-    this.atoutService.atoutSubject()
-      .subscribe(atout =>{
-        console.log("Atout is ", atout)
-      })
+    this.subscribeToChibre();
   }
 
-  subscribeToChooseAtout(){
+  subscribeToChooseAtout() {
     this.atoutService.chooseAtoutObservable()
-    .subscribe((player)=>{
-      if(player == this.selfPlayer){
+    .subscribe((player) => {
+      console.log('username: ', this.selfPlayer);
+      console.log('choose atout without chibre, player: ', player);
+      if (player === this.selfPlayer) {
         this.chooseAtout = true;
       }
     });
   }
 
-  sendAtout(atout: String){
+  subscribeToChibre() {
+    this.atoutService.chibreObservable()
+      .subscribe(player => {
+        console.log('username: ', this.selfPlayer);
+        console.log('chibre, player to chose: ', player);
+        if (player === this.selfPlayer) {
+          this.hadChibre = true;
+          this.chooseAtout = true;
+        }
+      });
+  }
+
+  sendAtout(atout: string) {
     this.atoutService.atoutSubject().next(atout);
+    this.chooseAtout = false;
+    this.hadChibre = false;
+  }
+
+  chibrer() {
+    this.atoutService.chibreObservable().next();
+    this.hadChibre = false;
     this.chooseAtout = false;
   }
 

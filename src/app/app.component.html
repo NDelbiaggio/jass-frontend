@@ -7,11 +7,9 @@
 <div class="playground">
 
     <div class="info">
-        <button class="sendAtout" >send atout</button>
         <div class="actions">
-            <button class="chibre" >chibre</button>
-            <h4>Atout</h4>
-            <h1 class="message"> messages: {{error}}</h1>
+            <button class="btnAuto" (click)="isPlayAuto = !isPlayAuto">Auto: {{isPlayAuto}}</button>
+            <!-- <h1 *ngIf="isDevMode" class="message"> messages: {{error}}</h1> -->
         </div>
         <div class="currentAtout">
             <img *ngIf="atout" class="atout" src="assets/images/{{atout}}.png" >
@@ -51,7 +49,6 @@
         class="username" >
         {{username}}
     </h3>
-    <app-hand [selfPlayer]="username" ></app-hand>
+    <app-hand [isPlayAuto]="isPlayAuto" [selfPlayer]="username" ></app-hand>
   </div>
 </div>
-

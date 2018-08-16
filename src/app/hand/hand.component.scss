@@ -1,43 +1,29 @@
+$nbCardsInHand: 9;
+$marginBtwCards : 0.2em;
 
 .cards{
     display: flex;
-    width: 100%; 
-    height: 100%;
     justify-content: center;
     align-items: center;
-    margin: 0;
-
     .card{
-        box-sizing: border-box;
-        width: auto;
-        padding: 0.5em;
-
-        img{
-            display: block;
-            margin: auto;
-            width: 100%;
-            max-width: 130px;
-            height: 100%;
-            box-shadow: 3px 2px 0 black;
-            border-radius: 10px;    
-            z-index: 1;
-        }
+        margin: 0 0.2em;
     }
-
-    .card > img:hover{
-        transform: scale(1.1);
-        cursor: pointer;
-        transition: transform .2s ease-in-out;
-        z-index: 2;
+    img{
+        display: block;
+        margin: auto;
     }
-
 }
 
-.card > img:hover, .atoutSelector > img:hover{
-    transform: scale(1.1);
-    cursor: pointer;
-    transition: transform .2s ease-in-out;
-    z-index: 2;
+@media screen and (max-aspect-ratio: 568/320) {
+    .cards{background-color: beige};
+    img{        
+        width: calc(100vw / #{$nbCardsInHand}  - #{($marginBtwCards + 0.1em) * 2}) ;
+    }
+}
+@media screen and (min-aspect-ratio: 568/320) {
+    img{
+        height: calc(100vh / 4);
+    }
 }
 
 .darker{

@@ -15,12 +15,12 @@ export class ScoresService {
     private websocketService: WebsocketService
   ) { }
 
-  scoresObservable(): Observable<any>{
-    if(!this.socket){
-      this.socket = this.websocketService.socket; 
+  scoresObservable(): Observable<any> {
+    if (!this.socket) {
+      this.socket = this.websocketService.socket;
     }
-    return new Observable(observer =>{
-      this.socket.on(this.scoreEvent, (scores: {totalA, totalB, playPointsA, playPointsB})=>{
+    return new Observable(observer => {
+      this.socket.on(this.scoreEvent, (scores: {totalA, totalB, playPointsA, playPointsB}) => {
         observer.next(scores);
       });
     });

@@ -11,27 +11,25 @@ export class CardDistributionService {
 
   socket: any;
 
-  cardsDistribEvent:String = "cards distribution";
+  cardsDistribEvent: String = 'cards distribution';
 
-  constructor(private websocketService: WebsocketService) { 
-    
-  }
+  constructor(private websocketService: WebsocketService) {}
 
-  cardDistributionObservable(): Observable<Card[]>{
+  cardDistributionObservable(): Observable<Card[]> {
     this.socket = this.websocketService.socket;
-    return new Observable(observer =>{
-      this.socket.on(this.cardsDistribEvent, ({cards})=>{
+    return new Observable(observer => {
+      this.socket.on(this.cardsDistribEvent, ({cards}) => {
         observer.next(cards);
       });
-    }).pipe(map((cards: any[]) =>{
-      let handCards: Card[] = [];
+    }).pipe(map((cards: any[]) => {
+      const handCards: Card[] = [];
       cards.forEach(card => {
-        let cardObj: Card = Object.assign(new Card(), card);
+        const cardObj: Card = Object.assign(new Card(), card);
         handCards.push(cardObj);
       });
-      handCards.sort((a, b)=>{
+      handCards.sort((a, b) => {
         return a.sortIndex - b.sortIndex;
-      })
+      });
       return handCards;
     }));
   }

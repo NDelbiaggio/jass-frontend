@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  ws_url: "http://localhost:3400"
+  ws_url: 'https://play-jass.herokuapp.com/'
 };

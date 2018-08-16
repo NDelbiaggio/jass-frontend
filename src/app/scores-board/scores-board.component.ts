@@ -21,9 +21,9 @@ export class ScoresBoardComponent implements OnInit {
     this.scoresSubscription();
   }
 
-  scoresSubscription(){
+  scoresSubscription() {
     this.scoresService.scoresObservable()
-      .subscribe(({totalA, totalB, playPointsA, playPointsB})=>{
+      .subscribe(({totalA, totalB, playPointsA, playPointsB}) => {
         this.totalPointsA = totalA;
         this.totalPointsB = totalB;
         this.playPointsA = playPointsA;

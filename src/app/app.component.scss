@@ -1,7 +1,10 @@
 .playground{
     .info{grid-area: info;}
     .points-panel{grid-area: points;}
-    .game-board{grid-area: board;}
+    .game-board{
+        grid-area: board;
+        background-color: red;
+    }
     .hand{grid-area: hand;}
     .player-top{grid-area: playertop;}
     .player-left{grid-area: playerleft;}
@@ -27,14 +30,8 @@
         "info playertop points"
         "playerleft board playerright"
         "hand hand hand";
-    background-color: green;
+    background-color: #1fb51a;
  }
-
- h3{
-     margin: 0;
-     padding: 0;
- }
-
 
 .info{
     display: flex;
@@ -54,13 +51,11 @@
             width: 100%;
             height: 100%;
             max-width: 100px;
-            padding: 1em;
+            max-height: 100px;
+            padding: 0.5em;
+            box-sizing: border-box;
         }
     }
-}
-
-.username{
-    text-align: center;
 }
 
 .turnToPlay{
@@ -71,4 +66,43 @@
 .choosingAtout{
     color: blue;
     font-size: 1.5em;
+}
+
+.username{
+    text-align: center;
+    margin: 0.5em auto;
+    font-size: 18px;
+}
+@media screen and (min-aspect-ratio: 568/320) {
+    .username{
+        margin: 0.5em auto;
+        font-size: 18px;
+    }
+}
+
+.btnAuto{
+    background-color:#44c767;
+    -moz-border-radius:28px;
+    -webkit-border-radius:28px;
+    border-radius:28px;
+    border:1px solid #18ab29;
+    display:inline-block;
+    cursor:pointer;
+    color:#ffffff;
+    font-family:Arial;
+    font-size:17px;
+    padding: 0.5em;
+    max-width: 100%;
+    box-sizing: border-box;
+    text-decoration: none;
+    text-shadow:0px 1px 0px #2f6627;
+
+    &:hover {
+        background-color:#5cbf2a;
+    }
+    &:active {
+        position:relative;
+        top:1px;
+    }
+    &:focus {-webkit-tap-highlight-color: transparent; outline:0;}        
 }

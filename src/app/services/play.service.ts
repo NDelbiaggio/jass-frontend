@@ -14,7 +14,7 @@ export class PlayService {
 
   socket: any;
 
-  play:Play =  new Play();
+  play: Play =  new Play();
 
   cardPlayedEvent: string = 'card played';
   playEvent: string = 'play';
@@ -28,40 +28,40 @@ export class PlayService {
     private atoutService: AtoutService
   ) {}
 
-  cardPlayedObservable(): Observable<Plie>{
-    if(!this.socket){
+  cardPlayedObservable(): Observable<Plie> {
+    if (!this.socket) {
       this.socket = this.websocketService.socket;
     }
 
-    let observable = new Observable(observer =>{
-      this.socket.on(this.cardPlayedEvent, ({card}: any)=>{
-        let cardObj = Object.assign(new Card(), card);
+    const observable = new Observable(observer => {
+      this.socket.on(this.cardPlayedEvent, ({card}: any) => {
+        const cardObj = Object.assign(new Card(), card);
         this.play.playACard(this.atoutService.atout, cardObj);
         observer.next();
       });
 
-      this.socket.on(this.plieEvent, ({plie})=>{
-        let plieObj: Plie = Object.assign(new Plie(), plie);        
-        let cards: Card[] = [];      
+      this.socket.on(this.plieEvent, ({plie}) => {
+        const plieObj: Plie = Object.assign(new Plie(), plie);
+        const cards: Card[] = [];
         plie.cards.forEach(card => {
-          let cardObj: Card = Object.assign(new Card(), card);
+          const cardObj: Card = Object.assign(new Card(), card);
           cards.push(cardObj);
         });
         plieObj.setCards(cards);
         this.play.addPlie(plieObj);
-        
+
         observer.next();
       });
 
     })
-      .pipe(map(()=>{        
+      .pipe(map(() => {
         return this.play.getLastPlie();
       }));
 
     return observable;
   }
 
-  playCard(card: Card): void{
+  playCard(card: Card): void {
     this.socket.emit(this.playEvent, card);
   }
 
@@ -76,14 +76,14 @@ export class PlayService {
   //   })
   // }
 
-  turnObservable(): Observable<string>{
-    if(!this.socket){
+  turnObservable(): Observable<string> {
+    if (!this.socket) {
       this.socket = this.websocketService.socket;
     }
-    return new Observable(observer =>{
-      this.socket.on(this.turnEvent, ({player})=>{
+    return new Observable(observer => {
+      this.socket.on(this.turnEvent, ({player}) => {
         observer.next(player);
-      })
-    })
+      });
+    });
   }
 }

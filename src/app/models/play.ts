@@ -1,5 +1,7 @@
+import { Action } from './action';
 import { Plie } from './plie';
 import { Card } from './card';
+
 
 export class Play {
 
@@ -46,7 +48,7 @@ export class Play {
      * @returns {Plie} plie
      */
     createNewPlie(): Plie {
-        const nextPlieNumber = (this.getNumberPlies() === 0 ? 1 : this.getLastPlie().number);
+        const nextPlieNumber = (this.getNumberPlies() === 0 ? 1 : this.getLastPlie().number + 1);
         const plie = new Plie(nextPlieNumber);
         this.plies.push(plie);
         return plie;
@@ -73,13 +75,13 @@ export class Play {
      * @param {Card} card
      * @returns {boolean} if the card has been added.
      */
-    playACard(atout: string, card: Card) {
+    playACard(atout: string, action: Action) {
         const lastPlie = this.getLastPlie();
         if (lastPlie.isFull()) {
             const newPlie = this.createNewPlie();
-            return newPlie.playCard(atout, card);
+            return newPlie.playCard(atout, action);
         } else {
-            return lastPlie.playCard(atout, card);
+            return lastPlie.playCard(atout, action);
         }
     }
 }

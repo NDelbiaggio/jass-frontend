@@ -1,11 +1,13 @@
 import { AtoutService } from './atout.service';
 import { Play } from './../models/play';
 import { WebsocketService } from './websocket.service';
-import { Observable } from 'rxjs';
-import { Injectable } from '@angular/core';
+import { Observable, Subject } from 'rxjs';
+import { Injectable, EventEmitter } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { Card } from '../models/card';
 import { Plie } from '../models/plie';
+import { Action } from '../models/action';
+
 
 @Injectable({
   providedIn: 'root'
@@ -18,63 +20,61 @@ export class PlayService {
 
   cardPlayedEvent: string = 'card played';
   playEvent: string = 'play';
-  plieEvent: string = 'plie';
+  plieEvent: string = 'trick';
   turnEvent: string = 'turn';
-  // yourTurnEvent: string = 'your turn';
 
+  cardObservable$: Observable<Plie>;
 
   constructor(
     private websocketService: WebsocketService,
     private atoutService: AtoutService
   ) {}
 
-  cardPlayedObservable(): Observable<Plie> {
-    if (!this.socket) {
-      this.socket = this.websocketService.socket;
-    }
+  listenCardEvent(){
+    if (!this.socket) { this.socket = this.websocketService.socket;}
 
-    const observable = new Observable(observer => {
-      this.socket.on(this.cardPlayedEvent, ({card}: any) => {
-        const cardObj = Object.assign(new Card(), card);
-        this.play.playACard(this.atoutService.atout, cardObj);
+    let cardEmitter: EventEmitter<Plie> = new EventEmitter();
+
+    const cardObservable: Observable<any> = new Observable((observer)=>{
+      this.socket.on(this.cardPlayedEvent, ({card, player})=>{
+        const cardObj: Card = Object.assign(new Card(), card);
+        const action = new Action(player, cardObj);
+        this.play.playACard(this.atoutService.atout, action);
         observer.next();
       });
 
-      this.socket.on(this.plieEvent, ({plie}) => {
-        const plieObj: Plie = Object.assign(new Plie(), plie);
-        const cards: Card[] = [];
-        plie.cards.forEach(card => {
-          const cardObj: Card = Object.assign(new Card(), card);
-          cards.push(cardObj);
+      this.socket.on(this.plieEvent, ({trick}) => {
+        const plieObj: Plie = Object.assign(new Plie(), trick);
+
+        const actions: Action[] = [];
+        trick.actions.forEach(action => {
+          const cardObj: Card = Object.assign(new Card(), action.card);
+          actions.push(new Action(action.playerName , cardObj));
         });
-        plieObj.setCards(cards);
-        this.play.addPlie(plieObj);
 
+        plieObj.setCards(actions);
+        this.play.addPlie(plieObj);
         observer.next();
       });
+    });
+    
+    cardObservable.subscribe(() => {
+      cardEmitter.emit(this.play.getLastPlie());
+    });
 
-    })
-      .pipe(map(() => {
-        return this.play.getLastPlie();
-      }));
-
-    return observable;
+    return cardEmitter.asObservable();
   }
 
-  playCard(card: Card): void {
-    this.socket.emit(this.playEvent, card);
+  cardPlayedObservable(): Observable<Plie> {
+    if(!this.cardObservable$){
+      this.cardObservable$ = this.listenCardEvent();
+    }
+    return  this.cardObservable$;
   }
 
-  // myTurnObservable(): Observable<string>{
-  //   if(!this.socket){
-  //     this.socket = this.websocketService.socket;
-  //   }
-  //   return new Observable(observer =>{
-  //     this.socket.on('your turn', ()=>{
-  //       observer.next();
-  //     })
-  //   })
-  // }
+  playCard(card: Card, callback: Function): void {
+    this.socket.emit(this.playEvent, card, callback);
+  }
 
   turnObservable(): Observable<string> {
     if (!this.socket) {

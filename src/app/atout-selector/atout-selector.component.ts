@@ -12,7 +12,7 @@ export class AtoutSelectorComponent implements OnInit {
 
   chooseAtout: boolean = false;
   hadChibre: boolean = false;
-  atoutMessage: string = 'Yourt turn to choose atout';
+  atoutMessage: string = 'Your turn to choose atout';
 
   constructor(private atoutService: AtoutService) {
 

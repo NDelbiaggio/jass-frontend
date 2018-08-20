@@ -37,6 +37,7 @@ export class HandComponent implements OnInit {
   cardDistributionSubcription() {
     this.cardDistributionService.cardDistributionObservable()
     .subscribe((cards) => {
+      console.log("HandCards are received: ", cards)
       this.cards = cards;
     });
   }
@@ -58,9 +59,19 @@ export class HandComponent implements OnInit {
   playCard(card) {
     if (this.myTurnToPlay) {
       const ind = this.cards.indexOf(card);
-      this.cards.splice(ind, 1);
-      this.playService.playCard(card);
+      this.playService.playCard(card, (err, message) => {
+        console.log(message);
+        if(err) {
+          console.log(err.message);
+          this.myTurnToPlay = true;
+        } else{
+          this.cards.splice(ind, 1);
+        }
+      });
+      
       this.myTurnToPlay = false;
+      
+      
     }
   }
 

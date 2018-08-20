@@ -17,31 +17,19 @@
     </div>
 
     <div class="player player-top">
-        <h3 [class.choosingAtout]="playerTop == playerChoosingAtout" 
-            [class.turnToPlay]="playerTop == playerTurn" 
-            class="pl-top-name">
-            {{playerTop}}
-        </h3>
+        <app-player [player]="playerTop" ></app-player>
     </div>
     <div class="points-panel">
         <app-scores-board></app-scores-board>
     </div>
     <div class="player player-left ">
-        <h3 [class.choosingAtout]="playerLeft == playerChoosingAtout" 
-            [class.turnToPlay]="playerLeft == playerTurn" 
-            class="pl-left-name">
-            {{playerLeft}}
-        </h3>
+        <app-player [player]="playerLeft" ></app-player>
     </div>
     <div class="game-board">
         <app-playground></app-playground>
     </div>
     <div class="player player-right">
-        <h3 [class.choosingAtout]="playerRight == playerChoosingAtout" 
-            [class.turnToPlay]="playerRight == playerTurn" 
-            class="pl-right-name">
-            {{playerRight}}
-        </h3>
+        <app-player [player]="playerRight" ></app-player>
     </div>
   <div class="hand">
     <h3 [class.choosingAtout]="username == playerChoosingAtout" 

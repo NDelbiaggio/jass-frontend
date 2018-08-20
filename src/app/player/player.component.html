@@ -1,0 +1,14 @@
+<div class="player-container">
+  <h3>{{player}}</h3>
+  <div class="status">
+    <div *ngIf="hasToPlay" class="hasToPlay">
+      <img src="/src/assets/images/hasToPlay.svg" alt="">
+    </div>
+    <div *ngIf="hasToChooseAtout" class="hasToChooseAtout">
+      <img src="/src/assets/images/hasToChooseAtout.png" alt="">
+    </div>
+    <div *ngIf="isLeading" class="leader">
+      <img src="/src/assets/images/leader.png" alt="">
+    </div>
+  </div>
+</div>

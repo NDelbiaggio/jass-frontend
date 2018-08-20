@@ -20,7 +20,6 @@ export class PlaygroundComponent implements OnInit {
         this.plie = plie;
         if (this.plie.isFull()) {
           setTimeout(() => {
-            console.log(this.plie);
             this.plie = null;
           }, 1000);
         }

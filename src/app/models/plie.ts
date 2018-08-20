@@ -1,3 +1,4 @@
+import { Action } from './action';
 import { Card } from './card';
 export class Plie {
 
@@ -5,10 +6,10 @@ export class Plie {
 
     constructor(
         public number: number = 0,
-        private cards: Card[] = [],
+        private actions: Action[] = [],
         public highestCardIndex?: number,
         public leadingPlayer?: string,
-        public lasPlayer?: string
+        public lastPlayer?: string
     ) {}
 
     /**
@@ -16,10 +17,10 @@ export class Plie {
      * @param {Card} card
      * @returns {boolean} return true if the card has been added.
      */
-    playCard(atout: string, card: Card): boolean {
+    playCard(atout: string, action: Action): boolean {
         if (this.isFull()) { return false; }
-        this.cards.push(card);
-        this.setHighestCardIndex(atout, card);
+        this.actions.push(action);
+        this.setHighestCardIndex(atout, action.card);
         return true;
     }
 
@@ -28,15 +29,27 @@ export class Plie {
      * @returns {number} number of cards
      */
     getNumberCards(): number {
-        return this.cards.length;
+        return this.actions.length;
     }
 
     /**
-     * Returnds the leading card of the plie
+     * Returns the leading card of the plie
      * @returns {Card} the leading card of the plie
      */
     getLeadingCard(): Card {
-        return this.cards[this.highestCardIndex];
+        return this.actions[this.highestCardIndex].card;
+    }
+
+    /**
+     * Returns the name of the leading player
+     * @returns {string} name of the leading player
+     */
+    getLeadingPlayer(): string {
+        const leadingAction = this.actions[this.highestCardIndex];
+        if (!leadingAction) {
+            return;
+        }
+        return leadingAction.player  ;
     }
 
     /**
@@ -44,7 +57,7 @@ export class Plie {
      * @returns {Card} the first card of the plie
      */
     getFirstCard(): Card {
-        return this.cards[0];
+        return this.actions[0].card;
     }
 
     /**
@@ -52,7 +65,7 @@ export class Plie {
      * @returns {boolean} return true if no more cards can be added
      */
     isFull(): boolean {
-        return this.cards.length === this.cardsLimit;
+        return this.actions.length === this.cardsLimit;
     }
 
     /**
@@ -60,15 +73,19 @@ export class Plie {
      * @returns {[Card]} the cards of the plie
      */
     getCards(): Card[] {
-        return this.cards;
+        const cards: Card[] = [];
+        this.actions.forEach(action => {
+            cards.push(action.card);
+        });
+        return cards;
     }
 
     /**
      * Set the cards of the plie with the one received as a parameter
      * @param cards
      */
-    setCards(cards: Card[]) {
-        this.cards = cards;
+    setCards(actions: Action[]) {
+        this.actions = actions;
     }
 
     /**

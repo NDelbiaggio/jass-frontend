@@ -11,8 +11,8 @@ export class AtoutService {
 
   private socket: any;
 
-  private chooseAtoutEvent: string = 'choose atout';
-  private atoutEvent: string = 'atout';
+  private chooseAtoutEvent: string = 'choose trump';
+  private atoutEvent: string = 'trump';
   private chibreEvent: string = 'chibre';
 
   constructor(private websocketService: WebsocketService) {
@@ -43,15 +43,15 @@ export class AtoutService {
       this.socket = this.websocketService.socket;
     }
     const observable = new Observable(observer => {
-      this.socket.on(this.atoutEvent, ({atout}) => {
-        this.atout = atout;
-        observer.next(atout);
+      this.socket.on(this.atoutEvent, ({trump}) => {
+        this.atout = trump;
+        observer.next(trump);
       });
     });
 
     const observer = {
-      next: (atout) => {
-        this.socket.emit(this.atoutEvent, atout);
+      next: (trump) => {
+        this.socket.emit(this.atoutEvent, trump);
       }
     };
 

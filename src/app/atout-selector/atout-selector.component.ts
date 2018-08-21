@@ -8,7 +8,7 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class AtoutSelectorComponent implements OnInit {
 
-  @Input('selfPlayer') selfPlayer: string;
+  @Input('selfPlayer') selfPlayer: string;  
 
   chooseAtout: boolean = false;
   hadChibre: boolean = false;
@@ -25,20 +25,19 @@ export class AtoutSelectorComponent implements OnInit {
 
   subscribeToChooseAtout() {
     this.atoutService.chooseAtoutObservable()
-    .subscribe((player) => {
-      console.log('username: ', this.selfPlayer);
-      console.log('choose atout without chibre, player: ', player);
-      if (player === this.selfPlayer) {
-        this.chooseAtout = true;
-      }
-    });
+      .subscribe((player) => {
+        if (player === this.selfPlayer) {
+          console.log('same ')
+          console.log(player);
+          console.log(this.selfPlayer);
+          this.chooseAtout = true;
+        }
+      });
   }
 
   subscribeToChibre() {
     this.atoutService.chibreObservable()
       .subscribe(player => {
-        console.log('username: ', this.selfPlayer);
-        console.log('chibre, player to chose: ', player);
         if (player === this.selfPlayer) {
           this.hadChibre = true;
           this.chooseAtout = true;

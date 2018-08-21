@@ -1,12 +1,12 @@
 import { Action } from './action';
-import { Plie } from './plie';
+import { Trick } from './plie';
 import { Card } from './card';
 
 
 export class Play {
 
     constructor(
-        private plies: Plie[] = []
+        public tricks: Trick[] = []
     ) {
         this.createNewPlie();
     }
@@ -15,24 +15,25 @@ export class Play {
      * Returns the first plie
      * @returns {plie} the first plie
      */
-    getFirstPlie(): Plie {
-        return this.plies[0];
+    getFirstPlie(): Trick {
+        return this.tricks[0];
     }
 
     /**
      * Returns the last plie
-     * @returns {Plie} the las plie
+     * @returns {Trick} the las plie
      */
-    getLastPlie(): Plie {
-        return this.plies[this.plies.length - 1];
+    getLastPlie(): Trick {
+        return this.tricks[this.tricks.length - 1];
     }
 
     /**
      * Returns the plie just before the last one
-     * @returns {Plie} the plie before the last one
+     * @returns {Trick} the plie before the last one
      */
-    getPreviousPlie(): Plie {
-        return this.plies[this.plies.length - 2];
+    getPreviousPlie(): Trick {
+        if(this.getNumberPlies() == 1){ return; };
+        return this.tricks[this.tricks.length - 2];
     }
 
     /**
@@ -40,17 +41,17 @@ export class Play {
      * @returns {number} number of plies
      */
     getNumberPlies(): number {
-        return this.plies.length;
+        return this.tricks.length;
     }
 
     /**
      * Create a new plie and add it to plies. The number of the plie is the incrementation of the last plie number by one.
-     * @returns {Plie} plie
+     * @returns {Trick} plie
      */
-    createNewPlie(): Plie {
+    createNewPlie(): Trick {
         const nextPlieNumber = (this.getNumberPlies() === 0 ? 1 : this.getLastPlie().number + 1);
-        const plie = new Plie(nextPlieNumber);
-        this.plies.push(plie);
+        const plie = new Trick(nextPlieNumber);
+        this.tricks.push(plie);
         return plie;
     }
 
@@ -58,15 +59,18 @@ export class Play {
      * Add the plie received in the plies array
      * @param plie
      */
-    addPlie(plie: Plie) {
-        this.plies.push(plie);
+    addPlie(plie: Trick) {        
+        if(this.getLastPlie().isEmpty()) {
+            this.tricks.pop();
+        }
+        this.tricks.push(plie);
     }
 
     /**
      * Removes all the plies in the play
      */
     clearPlies(): void {
-        this.plies = [];
+        this.tricks = [];
     }
 
     /**

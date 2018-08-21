@@ -4,9 +4,9 @@ export class Card {
         public type?: String,
         public name?: String,
         public power?,
-        public atoutPower?,
+        public trumpPower?,
         public sortIndex?: number,
-        public atoutValue?,
+        public trumpValue?,
         public value?,
         public imgSrc?
     ) {}

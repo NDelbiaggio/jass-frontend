@@ -3,7 +3,6 @@
     .points-panel{grid-area: points;}
     .game-board{
         grid-area: board;
-        background-color: red;
     }
     .hand{grid-area: hand;}
     .player-top{grid-area: playertop;}
@@ -23,7 +22,11 @@
         "info playertop points"
         "playerleft board playerright"
         "hand hand hand";
-    background-color: #1fb51a;
+    // background-color: #1fb51a;
+    background-image: url('../assets/images/grass.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
  }
 
 .info{

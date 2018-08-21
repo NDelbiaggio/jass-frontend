@@ -1,0 +1,10 @@
+
+<div *ngIf="previousTrick && display" class="trick">
+  <h3>Previous Trick</h3>
+  <div class="actions">
+    <div *ngFor="let action of previousTrick.getActions()" class="action" >
+      <img src="{{action.card.imgSrc}}" alt="">
+      <h4 class="player"> {{action.player}} </h4>
+    </div>
+  </div>
+</div>

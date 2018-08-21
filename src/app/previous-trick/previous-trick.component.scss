@@ -1,0 +1,52 @@
+
+
+.trick{
+    position: absolute;
+    display: flex;
+    width: 60vw;
+    height: 95vh;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    flex-wrap: wrap;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 2;
+
+    h3{
+        color: white;
+        text-align: center;
+        width: 100%;
+        flex-basis: 100%;
+        letter-spacing: 3px;
+    }
+    
+    .actions{
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        .action{
+            padding: 0.5em;
+            img{
+                display: block;            
+                box-shadow: 2px 2px 0.5px black;
+                border-radius: 10px;    
+            }   
+            h4 {
+                color: white;
+                text-align: center;
+                letter-spacing: 2px;
+            }     
+        }
+    }
+}
+
+@media screen and (max-aspect-ratio: 568/320) {
+    img{        
+        width: calc(60vw / 4 - 1.2em);
+    }
+}
+@media screen and (min-aspect-ratio: 568/320) {
+    img{
+        height: calc(40vh - 1em);
+    }
+}

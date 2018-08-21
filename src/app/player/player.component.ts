@@ -9,7 +9,8 @@ import { AtoutService } from '../services/atout.service';
 })
 export class PlayerComponent implements OnInit {
 
-  @Input('player') player: string;
+  @Input('player') player: string = "name not provided";
+  @Input('actions-position') actionsPosition: string;
 
 
   hasToPlay: boolean = false;
@@ -38,6 +39,8 @@ export class PlayerComponent implements OnInit {
   subscribeChooseAtout() {
     this.atoutService.chooseAtoutObservable()
       .subscribe(player => {
+        console.log(this.player);
+        console.log(player);
         this.hasToChooseAtout = this.player === player;
       });
   }

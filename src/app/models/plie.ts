@@ -1,8 +1,8 @@
 import { Action } from './action';
 import { Card } from './card';
-export class Plie {
+export class Trick {
 
-    cardsLimit = 4;
+    private cardsLimit = 4;
 
     constructor(
         public number: number = 0,
@@ -13,7 +13,7 @@ export class Plie {
     ) {}
 
     /**
-     * Add the card to the cards if the plie is not full
+     * Add the card to the cards if the trick is not full
      * @param {Card} card
      * @returns {boolean} return true if the card has been added.
      */
@@ -25,7 +25,7 @@ export class Plie {
     }
 
     /**
-     * Returns the number of cards in the plie
+     * Returns the number of cards in the trick
      * @returns {number} number of cards
      */
     getNumberCards(): number {
@@ -33,8 +33,8 @@ export class Plie {
     }
 
     /**
-     * Returns the leading card of the plie
-     * @returns {Card} the leading card of the plie
+     * Returns the leading card of the trick
+     * @returns {Card} the leading card of the trick
      */
     getLeadingCard(): Card {
         return this.actions[this.highestCardIndex].card;
@@ -53,15 +53,15 @@ export class Plie {
     }
 
     /**
-     * Returns the first card of the plie
-     * @returns {Card} the first card of the plie
+     * Returns the first card of the trick
+     * @returns {Card} the first card of the trick
      */
     getFirstCard(): Card {
         return this.actions[0].card;
     }
 
     /**
-     * Returns if the plie is full or if at least one card can be played
+     * Returns if the trick is full or if at least one card can be played
      * @returns {boolean} return true if no more cards can be added
      */
     isFull(): boolean {
@@ -69,8 +69,15 @@ export class Plie {
     }
 
     /**
-     * Returns the cards of the plie
-     * @returns {[Card]} the cards of the plie
+     * Returns true if there is no cards in the trick
+     */
+    isEmpty(): boolean {
+        return this.actions.length == 0;
+    }
+
+    /**
+     * Returns the cards of the trick
+     * @returns {[Card]} the cards of the trick
      */
     getCards(): Card[] {
         const cards: Card[] = [];
@@ -81,11 +88,19 @@ export class Plie {
     }
 
     /**
-     * Set the cards of the plie with the one received as a parameter
+     * Set the cards of the trick with the one received as a parameter
      * @param cards
      */
     setCards(actions: Action[]) {
         this.actions = actions;
+    }
+
+    /**
+     * Returns actions of the trick
+     * @returns {Action[]} actions of the trick
+     */
+    getActions() : Action[] {
+        return this.actions;
     }
 
     /**
@@ -116,7 +131,7 @@ export class Plie {
             if (card.type !== this.getLeadingCard().type) { return false; }
             return card.power > this.getLeadingCard().power;
         } else {
-            return card.atoutPower > this.getLeadingCard().atoutPower;
+            return card.trumpPower > this.getLeadingCard().trumpPower;
         }
     }
 

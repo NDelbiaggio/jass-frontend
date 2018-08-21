@@ -5,7 +5,7 @@ import { Observable, Subject } from 'rxjs';
 import { Injectable, EventEmitter } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { Card } from '../models/card';
-import { Plie } from '../models/plie';
+import { Trick } from '../models/plie';
 import { Action } from '../models/action';
 
 
@@ -18,22 +18,22 @@ export class PlayService {
 
   play: Play =  new Play();
 
-  cardPlayedEvent: string = 'card played';
-  playEvent: string = 'play';
-  plieEvent: string = 'trick';
-  turnEvent: string = 'turn';
+  private cardPlayedEvent: string = 'card played';
+  private playEvent: string = 'play';
+  private plieEvent: string = 'trick';
+  private turnEvent: string = 'turn';
 
-  cardObservable$: Observable<Plie>;
+  private cardObservable$: Observable<Trick>;
 
   constructor(
     private websocketService: WebsocketService,
     private atoutService: AtoutService
   ) {}
 
-  listenCardEvent(){
+  private listenCardEvent(){
     if (!this.socket) { this.socket = this.websocketService.socket;}
 
-    let cardEmitter: EventEmitter<Plie> = new EventEmitter();
+    let cardEmitter: EventEmitter<Trick> = new EventEmitter();
 
     const cardObservable: Observable<any> = new Observable((observer)=>{
       this.socket.on(this.cardPlayedEvent, ({card, player})=>{
@@ -44,7 +44,7 @@ export class PlayService {
       });
 
       this.socket.on(this.plieEvent, ({trick}) => {
-        const plieObj: Plie = Object.assign(new Plie(), trick);
+        const plieObj: Trick = Object.assign(new Trick(), trick);
 
         const actions: Action[] = [];
         trick.actions.forEach(action => {
@@ -65,7 +65,7 @@ export class PlayService {
     return cardEmitter.asObservable();
   }
 
-  cardPlayedObservable(): Observable<Plie> {
+  cardPlayedObservable(): Observable<Trick> {
     if(!this.cardObservable$){
       this.cardObservable$ = this.listenCardEvent();
     }

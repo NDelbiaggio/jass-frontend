@@ -5,14 +5,15 @@
     transform: translate(-50%,-50%);
 
     .status{
-        display: flex;    
-        .hasToPlay > img{
-            background-color: red;    
-        }
-        
+        display: inline-block;    
+                
         .hasToPlay > img, .hasToChooseAtout > img, .leader > img{
             height: 50px;
             width: 50px;
+        }
+        img{
+            display: block;
+            margin: auto;
         }
     }
 }

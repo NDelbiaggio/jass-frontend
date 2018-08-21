@@ -1,4 +1,4 @@
-import { Plie } from './../models/plie';
+import { Trick } from './../models/plie';
 import { PlayService } from './../services/play.service';
 import { Component, OnInit } from '@angular/core';
 
@@ -9,7 +9,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PlaygroundComponent implements OnInit {
 
-  plie: Plie;
+  plie: Trick;
 
   constructor(private playService: PlayService) {
   }

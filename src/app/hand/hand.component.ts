@@ -1,4 +1,4 @@
-import { Plie } from './../models/plie';
+import { Trick } from './../models/plie';
 import { AtoutService } from './../services/atout.service';
 import { UtilsService } from './../utils.service';
 import { PlayService } from './../services/play.service';
@@ -17,7 +17,7 @@ export class HandComponent implements OnInit {
   @Input('isPlayAuto') isPlayAuto: boolean = false;
 
   cards: Card[] = [];
-  plie: Plie;
+  plie: Trick;
   atout: string;
 
   myTurnToPlay: boolean = false;

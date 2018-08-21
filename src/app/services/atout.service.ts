@@ -15,19 +15,21 @@ export class AtoutService {
   private atoutEvent: string = 'trump';
   private chibreEvent: string = 'chibre';
 
+  private atoutSubject$: Subject<string>;
+  private chooseAtout$: Observable<string>;
+
   constructor(private websocketService: WebsocketService) {
     this.socket = websocketService.socket;
   }
-
+  cpt = 0;
   /**
-   * Returns an observable of the event that notifies which player has to choose atout
+   * Returns an observable that notifies the player name that has to choose atout
    * @returns {Observable<string>} player that has to choose atout
    */
   chooseAtoutObservable(): Observable<string> {
-    if (!this.socket) {
-      this.socket = this.websocketService.socket;
-    }
-    return new Observable(observer => {
+    if(this.chooseAtout$) { return this.chooseAtout$; }    
+    if (!this.socket) { this.socket = this.websocketService.socket; }
+    return this.chooseAtout$ = new Observable(observer => {
       this.socket.on(this.chooseAtoutEvent, ({player}) => {
         observer.next(player);
       });
@@ -39,6 +41,7 @@ export class AtoutService {
    * @returns {Subject<string>} atout
    */
   atoutSubject(): Subject<string> {
+    if (this.atoutSubject$){ return this.atoutSubject$; }
     if (!this.socket) {
       this.socket = this.websocketService.socket;
     }
@@ -55,7 +58,8 @@ export class AtoutService {
       }
     };
 
-    return  Subject.create(observer, observable);
+    this.atoutSubject$ = Subject.create(observer, observable);
+    return  this.atoutSubject$;
   }
 
   /**

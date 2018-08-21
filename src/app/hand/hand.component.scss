@@ -15,7 +15,7 @@ $marginBtwCards : 0.2em;
 }
 
 @media screen and (max-aspect-ratio: 568/320) {
-    .cards{background-color: beige};
+    // .cards{background-color: beige};
     img{        
         width: calc(100vw / #{$nbCardsInHand}  - #{($marginBtwCards + 0.1em) * 2}) ;
     }

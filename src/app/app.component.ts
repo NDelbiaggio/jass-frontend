@@ -18,18 +18,16 @@ export class AppComponent implements OnInit {
   username: string = 'Me';
 
   atout: string;
-  playerTurn: string;
-  playerChoosingAtout: string;
 
   error: string = '';
 
   isDevMode: boolean = isDevMode();
   isPlayAuto: boolean = false;
+  displayPrevTrick: boolean = false;
 
   constructor(
     private websocket: WebsocketService,
-    private atoutService: AtoutService,
-    private playService: PlayService
+    private atoutService: AtoutService
   ) {
     this.username = 'Player ' + Math.trunc(Math.random() * (100 - 1) + 1);
   }
@@ -42,8 +40,6 @@ export class AppComponent implements OnInit {
     this.websocket.connect(this.username);
     this.subscribeToPlayerJoined();
     this.subscribeToAtout();
-    this.subscribeTurn();
-    this.subscribeChooseAtout();
     this.subscribeToErrors();
     this.subscribePlayerLeft();
   }
@@ -60,7 +56,6 @@ export class AppComponent implements OnInit {
     this.atoutService.atoutSubject()
       .subscribe(atout => {
         this.atout = atout;
-        this.playerChoosingAtout = '';
       });
   }
 
@@ -70,21 +65,6 @@ export class AppComponent implements OnInit {
       this.error = message;
       console.log(message);
     });
-  }
-
-  subscribeTurn() {
-    this.playService.turnObservable()
-      .subscribe(player => {
-        this.playerTurn = player;
-      });
-  }
-
-  subscribeChooseAtout() {
-    this.atoutService.chooseAtoutObservable()
-      .subscribe(player => {
-        this.playerChoosingAtout = player;
-        this.playerTurn = '';
-      });
   }
 
   subscribePlayerLeft() {
@@ -115,4 +95,8 @@ export class AppComponent implements OnInit {
         }
     }
   }
+
+  mousedown(){ this.displayPrevTrick = true; }
+
+  mouseup(){ this.displayPrevTrick = false; }
 }

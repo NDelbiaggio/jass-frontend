@@ -1,14 +1,14 @@
 <div class="player-container">
-  <h3>{{player}}</h3>
+  <h3 [style.display]="actionsPosition == 'inline' ? 'inline' : 'block'" >{{player}}</h3>
   <div class="status">
     <div *ngIf="hasToPlay" class="hasToPlay">
-      <img src="/src/assets/images/hasToPlay.svg" alt="">
+      <img src="assets/images/hasToPlay.png" alt="">
     </div>
     <div *ngIf="hasToChooseAtout" class="hasToChooseAtout">
-      <img src="/src/assets/images/hasToChooseAtout.png" alt="">
+      <img src="assets/images/hasToChooseAtout.png" alt="">
     </div>
     <div *ngIf="isLeading" class="leader">
-      <img src="/src/assets/images/leader.png" alt="">
+      <img src="assets/images/leader.png" alt="">
     </div>
   </div>
 </div>

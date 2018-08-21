@@ -8,6 +8,7 @@ import { AtoutSelectorComponent } from './atout-selector/atout-selector.componen
 import { PlaygroundComponent } from './playground/playground.component';
 import { ScoresBoardComponent } from './scores-board/scores-board.component';
 import { PlayerComponent } from './player/player.component';
+import { PreviousTrickComponent } from './previous-trick/previous-trick.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { PlayerComponent } from './player/player.component';
     PlaygroundComponent,
     ScoresBoardComponent,
     PlayerComponent,
+    PreviousTrickComponent,
   ],
   imports: [
     BrowserModule

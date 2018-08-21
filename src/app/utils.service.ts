@@ -1,4 +1,4 @@
-import { Plie } from './models/plie';
+import { Trick } from './models/plie';
 import { Card } from './models/card';
 import { Injectable } from '@angular/core';
 
@@ -13,11 +13,11 @@ export class UtilsService {
    * Return true if the card is playable according to the plie, atout and the cards in hand
    * @param {Card} card
    * @param {string} atout
-   * @param {Plie} plie
+   * @param {Trick} plie
    * @param {[Card]} cardsInHand
    * @returns {boolean} return if the card is playable or not
    */
-  isCardPlayable(card: Card, atout: string, plie: Plie, cardsInHand: Card[]): boolean {
+  isCardPlayable(card: Card, atout: string, plie: Trick, cardsInHand: Card[]): boolean {
       if (plie.getNumberCards() === 0) {
           return true;
       }
@@ -31,7 +31,7 @@ export class UtilsService {
               if (leadingCard.type !== atout) {
                   return true;
               } else {
-                  if (card.atoutPower > leadingCard.atoutPower) {
+                  if (card.trumpPower > leadingCard.trumpPower) {
                       return true;
                   } else {
                       const result = cardsInHand.find((c) => {
@@ -39,7 +39,7 @@ export class UtilsService {
                       });
                       if (result) { return false; }
                       const res = cardsInHand.find((c) => {
-                          return c.type === atout && c.atoutPower > leadingCard.atoutPower && c.atoutPower !== 9;
+                          return c.type === atout && c.trumpPower > leadingCard.trumpPower && c.trumpPower !== 9;
                       });
                       if (res) { return false; }
                       return true;
@@ -54,7 +54,7 @@ export class UtilsService {
           }
       } else {
           const result = cardsInHand.find(c => {
-              return c.type === firstCardPlayed.type && c.atoutPower !== 9;
+              return c.type === firstCardPlayed.type && c.trumpPower !== 9;
           });
           if (result) { return false; }
           return true;
